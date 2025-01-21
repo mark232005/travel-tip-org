@@ -79,6 +79,7 @@ function onRemoveLoc(locId) {
             console.error('OOPs:', err)
             flashMsg('Cannot remove location')
         })
+        console.log('Removing loc:', locId)
 }
 
 function onSearchAddress(ev) {
