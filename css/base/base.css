@@ -1,0 +1,47 @@
+body {
+    background-color: var(--bg1);
+    color: #eee;
+    overflow-x: hidden;
+}
+
+header {
+    background-color: var(--bg2);
+    color: aliceblue;
+    padding: 0.3em;
+}
+
+header h1 {
+    margin: 0;
+}
+
+input[type=text],input[type=number] {
+    line-height: 2em;
+    background-color: var(--color1);
+    border: 0;
+}
+
+button {
+    color: whitesmoke;
+    border: 0;
+    border-radius: .2em;
+    background-color: #222;
+    padding: 6px 10px;
+    margin: 2px;
+    cursor: pointer;
+    transition: background-color .5s;
+}
+
+button:hover {
+    color: var(--color2);
+    background-color: #111;
+}
+
+.muted {
+    font-size: .9em;
+    color: var(--gray1);
+}
+
+.smaller {
+    font-size: .8em;
+}
+

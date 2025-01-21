@@ -1,0 +1,23 @@
+.selected-loc {
+    background-color: var(--bg3);
+    color: whitesmoke;
+    max-height: 0em;
+    height: 0;
+    overflow: hidden;
+    transition: .5s;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.selected-loc.show {
+    height: auto;
+    max-height: 15em;
+    padding: 0.5em;
+}
+
+.selected-loc input[name=loc-copier] {
+    opacity: 0;
+}
+
+.loc-rate {
+    color: var(--color4);
+}

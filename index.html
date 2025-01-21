@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css">
+    <title>TravelTip</title>
+</head>
+
+<body>
+    <header>
+        <h1>TravelTip</h1>
+        <section class="selected-loc">
+            <h2>Location: <span class="loc-name"></span> <span class="loc-rate"></span></h2>
+            <h4 class="loc-address"></h4>
+            <button onclick="app.onCopyLoc()">Copy location</button>
+            <button onclick="app.onShareLoc()">Share location</button>
+            <input name="loc-copier" />
+        </section>
+        <form class="form-search" onsubmit="app.onSearchAddress(event)">
+            <input type="text" name="address" placeholder="Search address" />
+            <button title="Search">🔍</button>
+            <button type="button" title="My Position" onclick="app.onPanToUserPos()" class="btn-user-pos">&nbsp;
+            </button>
+        </form>
+    </header>
+    <main>
+        <div class="map"></div>
+        <div>
+            <section class="locs-container">
+                <section class="loc-filter">
+                    <div>
+                        <input name="filter-by-txt" type="text" placeholder="Search location"
+                            oninput="app.onSetFilterBy({txt: this.value})" />
+                    </div>
+                    <div>
+                        <label>
+                            Min Rate:
+                            <input name="filter-by-rate" type="range" min="0" max="5" value="0" class="filter-rate-range"
+                                onchange="this.title=this.value;app.onSetFilterBy({minRate: this.value})" />
+                        </label>
+                    </div>
+                    <p>
+                        Sort by:
+                        <select class="sort-by" onchange="app.onSetSortBy()">
+                            <option value="name">Name</option>
+                            <option value="rate" selected>Rate</option>
+                        </select>
+                        <label>
+                            <input class="sort-desc" type="checkbox" oninput="app.onSetSortBy()" />
+                            Descending
+                        </label>
+                    </p>
+                </section>
+                <h3>Locations</h3>
+                <ul class="loc-list"></ul>
+                <section class="loc-stats">
+                    <h3>Statistics</h3>
+                    <div class="loc-stats-rate">
+                        <h4>By rate:</h4>
+                        <div class="pie"></div>
+                        <ul class="legend"></ul>
+                    </div>
+                </section>
+            </section>
+        </div>
+    </main>
+    <pre class="debug" hidden></pre>
+    <div class="user-msg"></div>
+    <script type="module" src="js/app.controller.js"></script>
+</body>
+
+</html>
