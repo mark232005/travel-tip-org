@@ -34,17 +34,20 @@ function lookupAddressGeo(geoOrAddress) {
     // Sample URLs:
     // const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}`
     // const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452`
-
     var url = `https://maps.googleapis.com/maps/api/geocode/json?key=${API_KEY}&`
+
     url += (geoOrAddress.lat) ? `latlng=${geoOrAddress.lat},${geoOrAddress.lng}` :
         `address=${geoOrAddress}`
-
+        console.log(geoOrAddress)
+    
     return fetch(url)
         .then(res => res.json())
         .then(res => {
             // console.log('RES IS', res)
             if (!res.results.length) return new Error('Found nothing')
             res = res.results[0]
+            console.log('RES IS', res)
+            
             const {formatted_address, geometry} = res
 
             const geo = {
@@ -55,6 +58,9 @@ function lookupAddressGeo(geoOrAddress) {
             }
             // console.log('GEO IS', geo)
             return geo
+        }).catch(err => {
+            console.error('Cannot find address', err)
+            throw err
         })
 
 }
