@@ -1,7 +1,8 @@
 import { utilService } from './services/util.service.js'
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
-
+let gUserPos = null
+console.log('gUserPos:', gUserPos)
 window.onload = onInit
 
 // To make things easier in this project structure 
@@ -41,8 +42,12 @@ function renderLocs(locs) {
         <li class="loc ${className}" data-id="${loc.id}">
             <h4>  
                 <span>${loc.name}</span>
+
                 <span title="${loc.rate} stars">${'★'.repeat(loc.rate)}</span>
             </h4>
+            <p>
+                <span>Distance :${gUserPos ? utilService.getDistance(gUserPos, loc.geo) + 'km' : 'Loading...'}</span>
+            </p>
             <p class="muted">
                 Created: ${utilService.elapsedTime(loc.createdAt)}
                 ${(loc.createdAt !== loc.updatedAt) ?
@@ -70,18 +75,19 @@ function renderLocs(locs) {
 
 function onRemoveLoc(locId) {
     const confirmed = confirm('Are you sure?')
-    if(confirmed){
-    locService.remove(locId)
-        .then(() => {
-            flashMsg('Location removed')
-            unDisplayLoc()
-            loadAndRenderLocs()
-        })
-        .catch(err => {
-            console.error('OOPs:', err)
-            flashMsg('Cannot remove location')
-        })}
-        console.log('Removing loc:', locId)
+    if (confirmed) {
+        locService.remove(locId)
+            .then(() => {
+                flashMsg('Location removed')
+                unDisplayLoc()
+                loadAndRenderLocs()
+            })
+            .catch(err => {
+                console.error('OOPs:', err)
+                flashMsg('Cannot remove location')
+            })
+    }
+    console.log('Removing loc:', locId)
 }
 
 function onSearchAddress(ev) {
@@ -130,9 +136,12 @@ function loadAndRenderLocs() {
 function onPanToUserPos() {
     mapService.getUserPosition()
         .then(latLng => {
+            gUserPos = latLng
             mapService.panTo({ ...latLng, zoom: 15 })
             unDisplayLoc()
             loadAndRenderLocs()
+
+            console.log('User position is:', latLng)
             flashMsg(`You are at Latitude: ${latLng.lat} Longitude: ${latLng.lng}`)
         })
         .catch(err => {
@@ -226,7 +235,7 @@ function getFilterByFromQueryParams() {
     const queryParams = new URLSearchParams(window.location.search)
     const txt = queryParams.get('txt') || ''
     const minRate = queryParams.get('minRate') || 0
-    locService.setFilterBy({txt, minRate})
+    locService.setFilterBy({ txt, minRate })
 
     document.querySelector('input[name="filter-by-txt"]').value = txt
     document.querySelector('input[name="filter-by-rate"]').value = minRate
