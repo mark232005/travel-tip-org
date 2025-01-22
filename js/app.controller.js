@@ -1,7 +1,7 @@
 import { utilService } from './services/util.service.js'
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
-let gUserPos = 'hello'
+let gUserPos = null
 console.log('gUserPos:', gUserPos)
 window.onload = onInit
 
