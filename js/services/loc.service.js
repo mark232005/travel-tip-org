@@ -95,11 +95,11 @@ function getLocCountByRateMap() {
     return storageService.query(DB_KEY)
         .then(locs => {
             const locCountByRateMap = locs.reduce((map, loc) => {
-                if (loc.rate > 4) map.high++
-                else if (loc.rate >= 3) map.medium++
-                else map.low++
+                if (loc.createdAt===loc.updatedAt) map.Never++
+                else if (utilService.elapsedTime(loc.updatedAt)==='today') map.Past++
+                else map.Today++
                 return map
-            }, { high: 0, medium: 0, low: 0 })
+            }, { Today: 0, Past: 0, Never: 0 })
             locCountByRateMap.total = locs.length
             return locCountByRateMap
         })
@@ -152,6 +152,7 @@ function _createDemoLocs() {
         ]
 
     locs = locs.map(_createLoc)
+    console.log(locs);
     utilService.saveToStorage(DB_KEY, locs)
 }
 
