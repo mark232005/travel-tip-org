@@ -30,6 +30,7 @@ export const locService = {
     save,
     setFilterBy,
     setSortBy,
+    getLocCountByUpdateMap,
     getLocCountByRateMap
 }
 
@@ -90,18 +91,31 @@ function setFilterBy(filterBy = {}) {
     if (filterBy.minRate !== undefined && !isNaN(filterBy.minRate)) gFilterBy.minRate = filterBy.minRate
     return gFilterBy
 }
-
 function getLocCountByRateMap() {
     return storageService.query(DB_KEY)
         .then(locs => {
             const locCountByRateMap = locs.reduce((map, loc) => {
+                if (loc.rate > 4) map.high++
+                else if (loc.rate >= 3) map.medium++
+                else map.low++
+                return map
+            }, { high: 0, medium: 0, low: 0 })
+            locCountByRateMap.total = locs.length
+            return locCountByRateMap
+        })
+}
+
+function getLocCountByUpdateMap() {
+    return storageService.query(DB_KEY)
+        .then(locs => {
+            const locCountByUpdateMap = locs.reduce((map, loc) => {
                 if (loc.createdAt===loc.updatedAt) map.Never++
                 else if (utilService.elapsedTime(loc.updatedAt)==='today') map.Past++
                 else map.Today++
                 return map
             }, { Today: 0, Past: 0, Never: 0 })
-            locCountByRateMap.total = locs.length
-            return locCountByRateMap
+            locCountByUpdateMap.total = locs.length
+            return locCountByUpdateMap
         })
 }
 

@@ -271,9 +271,11 @@ function onSetFilterBy({ txt, minRate }) {
 }
 
 function renderLocStats() {
-    locService.getLocCountByRateMap().then(stats => {
+    locService.getLocCountByUpdateMap().then(stats => {
+        handleStats(stats, 'loc-stats-update')
+    }).then( locService.getLocCountByRateMap().then(stats => {
         handleStats(stats, 'loc-stats-rate')
-    })
+    }))
 }
 
 function handleStats(stats, selector) {
