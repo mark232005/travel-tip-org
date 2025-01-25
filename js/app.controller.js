@@ -55,9 +55,9 @@ function renderLocs(locs) {
                 : ''}
             </p>
             <div class="loc-btns">     
-               <button title="Delete" onclick="app.onRemoveLoc('${loc.id}')">🗑️</button>
-               <button title="Edit" onclick="app.onUpdateLoc('${loc.id}')">✏️</button>
-               <button title="Select" onclick="app.onSelectLoc('${loc.id}')">🗺️</button>
+               <button title="Delete" onclick="app.onRemoveLoc('${loc.id}')"><img src="img/delet-btn.svg"></button>
+               <button title="Edit" onclick="app.onUpdateLoc('${loc.id}')"><img src="img/edit-btn.svg"></button>
+               <button title="Select" onclick="app.onSelectLoc('${loc.id}')"><img src="img/select-btn.svg"></button>
             </div>     
         </li>`}).join('')
 
