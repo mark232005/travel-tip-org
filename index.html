@@ -71,6 +71,14 @@
                 </section>
             </section>
         </div>
+        <dialog>
+            <form onsubmit="app.onSave(event)">
+                <input name="id" type="hidden">
+                <input name="address" type="text">
+                <input name="rate" type="number">
+                <button>save</button>
+            </form>
+        </dialog>
     </main>
     <pre class="debug" hidden></pre>
     <div class="user-msg"></div>
